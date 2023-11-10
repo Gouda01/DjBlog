@@ -2,8 +2,9 @@ from django.shortcuts import render
 
 from .models import Post
 
-# Create your views here.
+from django.views.generic import ListView , DetailView
 
+# Create your views here.
 
 
 def post_list (request):
@@ -15,7 +16,6 @@ def post_list (request):
     }
     return render(request,'posts/post_list.html',context)
 
-
 def post_detail (request,post_id) :
     data = Post.objects.get(id = post_id)
     
@@ -23,3 +23,13 @@ def post_detail (request,post_id) :
         'post' : data
     }
     return render (request , 'posts/post_detail.html' , context)
+
+
+
+
+
+class PostList (ListView) :
+    model = Post
+
+class PostDetail (DetailView):
+    model = Post
