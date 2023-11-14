@@ -1,8 +1,7 @@
-from django.shortcuts import render
-
+from django.shortcuts import render , redirect
 from .models import Post
-
 from django.views.generic import ListView , DetailView
+from .forms import PostForm
 
 # Create your views here.
 
@@ -24,6 +23,17 @@ def post_detail (request,post_id) :
     }
     return render (request , 'posts/post_detail.html' , context)
 
+
+def create_post(request):
+    if request.method == 'POST' :
+        form = PostForm(request.POST,request.FILES)
+        if form.is_valid() :
+            form.save()
+            return redirect ('/posts/')
+    else :
+        form = PostForm()
+
+    return render (request,'posts/new.html',{'form':form})
 
 
 
