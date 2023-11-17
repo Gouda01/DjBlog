@@ -1,6 +1,5 @@
 from django.shortcuts import render , redirect
 from .models import Post
-from django.views.generic import ListView , DetailView
 from .forms import PostForm
 
 # Create your views here.
@@ -33,7 +32,7 @@ def create_post(request):
     else :
         form = PostForm()
 
-    return render (request,'posts/new.html',{'form':form})
+    return render (request,'posts/post_form.html',{'form':form})
 
 def edit_post(request,pk):
     post = Post.objects.get(id=pk)
@@ -56,8 +55,16 @@ def delete_post(request,pk):
 
 
 
+
+from django.views.generic import ListView , DetailView ,UpdateView , CreateView , DeleteView
+
 class PostList (ListView) :
     model = Post
 
 class PostDetail (DetailView):
     model = Post
+
+class AddPost (CreateView):
+    model = Post
+    fields = '__all__'
+    success_url = '/posts/'
