@@ -10,12 +10,12 @@ def post_list (request):
     data = Post.objects.all()
 
     context = {
-        'mahmoud' : data
+        'object_list' : data
     }
     return render(request,'posts/post_list.html',context)
 
-def post_detail (request,post_id) :
-    data = Post.objects.get(id = post_id)
+def post_detail (request,pk) :
+    data = Post.objects.get(id = pk)
     
     context = {
         'post' : data
@@ -27,7 +27,9 @@ def create_post(request):
     if request.method == 'POST' :
         form = PostForm(request.POST,request.FILES)
         if form.is_valid() :
-            form.save()
+            myform = form.save(commit=False)
+            myform.author = request.user
+            myform.save()
             return redirect ('/posts/')
     else :
         form = PostForm()
@@ -40,7 +42,9 @@ def edit_post(request,pk):
     if request.method == 'POST' :
         form = PostForm(request.POST,request.FILES,instance=post)
         if form.is_valid() :
-            form.save()
+            myform = form.save(commit=False)
+            myform.author = request.user
+            myform.save()
             return redirect ('/posts/')
     else :
         form = PostForm(instance=post)
