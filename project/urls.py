@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from posts.views import post_list , post_detail ,PostList , PostDetail , create_post , edit_post ,delete_post,AddPost,EditPost,DeletePost
-from posts.api import post_list_api
+from posts.api import post_list_api,post_detail_api
 
 
 urlpatterns = [
@@ -43,6 +43,7 @@ urlpatterns = [
 
     
     path('posts/api',post_list_api),
+    path('posts/api/<int:pk>',post_detail_api),
     
 ]
 
