@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_summernote',
     'django_bootstrap5',
     'rest_framework',
+    'drf_yasg',
 
     'posts',
 ]
